@@ -144,7 +144,7 @@
                 max-height: 300px !important;
                 cursor: move;
                 float: left;
-                position: fixed;
+                position: absolute;
             }
 
             .red-background {
@@ -238,7 +238,7 @@
 
                 <div id="side-panel">
 
-                    <div class="panel panel-default order-card" @click="addData()">
+                    <div class="panel panel-default order-card" @click="addData(id++)">
                         <div  class="panel-body order-card-body">
                             <div class="order-time red-background">
                                 <i style="">Hace<br><span style="font-size: 34px"><strong>5</strong></span><br>Minutos</i>
@@ -255,44 +255,47 @@
 
 
                 <div id="orders">
-                    <div class="panel panel-default draggable" v-for="(data,index) in test">
-                        <div class="button close-button" style="position:absolute; top: 0;right: 1px;display:inline-block">
-                            <span class="close-icon"></span>
-                        </div>
-                        <div class="button" style="position:absolute; top: 0;right: 21px;display:inline-block">
-                            <i class="fa fa-window-maximize fa-fw"></i>
-                        </div>
-                        <div class="button" style="position:absolute; top: 0;right: 41px;display:inline-block">
-                            <span class="minimize-icon"></span>
-                        </div>
+                    <div class="draggable" v-for="(data,index) in test">
+                        <div v-if="data!=null" class="panel panel-default">
+                            <div @click="remove(index)" class="button close-button" style="position:absolute; top: 0;right: 1px;display:inline-block">
+                                <span class="close-icon"></span>
+                            </div>
+                            <div class="button" style="position:absolute; top: 0;right: 21px;display:inline-block">
+                                <i class="fa fa-window-maximize fa-fw"></i>
+                            </div>
+                            <div @click="minimize(index)" class="button" style="position:absolute; top: 0;right: 41px;display:inline-block">
+                                <span class="minimize-icon"></span>
+                            </div>
 
-                        <div  class="panel-body order-card-body">
-                            <div style="text-align: center;font-size: 13px;margin-top: 5px"><b>Orden #2</b></div>
-                            <div class="panel panel-default order">
-                                <div  class="panel-body order-card-body">
-                                    <div class="order-header red-background">
-                                        <i><b>Enviada hace 16 Minutos</b></i>
-                                    </div>
+                            <div  class="panel-body order-card-body">
+                                <div style="text-align: center;font-size: 13px;margin-top: 5px"><b>Orden #@{{data}}</b></div>
+                                <div class="panel panel-default order">
+                                    <div  class="panel-body order-card-body">
+                                        <div class="order-header red-background">
+                                            <i><b>Enviada hace 16 Minutos</b></i>
+                                        </div>
 
-                                    <div style="height: 60px">
-                                        <span style="padding-left: 7px">Mesa: 1</span>
-                                        <button style="padding-left: 5px;padding-right: 5px" class="btn btn-default center-block"><strong>Marcar Orden Completada  <i class="fa fa-check fa-fw"></i></strong></button>
-                                    </div>
+                                        <div style="height: 60px">
+                                            <span style="padding-left: 7px">Mesa: 1</span>
+                                            <button style="padding-left: 5px;padding-right: 5px" class="btn btn-default center-block"><strong>Marcar Orden Completada  <i class="fa fa-check fa-fw"></i></strong></button>
+                                        </div>
 
-                                    <div class="product">
-                                        <span>Pedido #1</span><br>
-                                        <span>Platillo: Test</span><br>
-                                        <span>Cantidad: 1</span><br>
-                                        <span class="alert-text" style="font-size: 11px;"> <i class="fa fa-exclamation-circle fa-fw"></i>Información Adicional del Pedido: </span>
+                                        <div class="product">
+                                            <span>Pedido #1</span><br>
+                                            <span>Platillo: Test</span><br>
+                                            <span>Cantidad: 1</span><br>
+                                            <span class="alert-text" style="font-size: 11px;"> <i class="fa fa-exclamation-circle fa-fw"></i>Información Adicional del Pedido: </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
                     <div style="position: absolute;bottom: 0;width:100%;height:37px;left: 0;border-top:1px solid #dddddd;">
 
-                        <div style="height: 36px;margin: 0;width: 175px;float: left" class="panel panel-default">
+                        <div v-for="(data,index) in minimized" style="height: 36px;margin: 0;width: 175px;float: left" class="panel panel-default">
 
                             <div class="panel-body" style="padding: 0;position:relative">
                                 <div class="button close-button" style="position:absolute; top: 0;right: 1px;display:inline-block">
@@ -301,13 +304,13 @@
                                 <div class="button" style="position:absolute; top: 0;right: 21px;display:inline-block">
                                     <i class="fa fa-window-maximize fa-fw"></i>
                                 </div>
-                                <div class="button" style="position:absolute; top: 0;right: 41px;display:inline-block">
+                                <div @click="comeback(index)" class="button" style="position:absolute; top: 0;right: 41px;display:inline-block">
                                     <i class="fa fa-location-arrow fa-fw"></i>
                                 </div>
                                 <div style="height: 35px;width: 15px;border-radius:2px;border-right:1px solid #dddddd;position:absolute; top: 0;left: 0;display:inline-block" class="red-background">
                                 </div>
 
-                                <strong style="padding-left: 20px;margin-top:8px;font-size: 13px;display: block">Orden #11399</strong>
+                                <strong style="padding-left: 20px;margin-top:8px;font-size: 13px;display: block">Orden @{{data}}</strong>
                             </div>
                         </div>
                     </div>
@@ -351,38 +354,54 @@
         el: '#app',
         data: {
             test : [],
+            minimized : [],
             container : {
                 height : 0,
                 width : 0
-            }
-
+            },
+            id : 1
         },
         methods: {
 
-            addData : function (){
-                this.test.push(1);
+            addData : function (data){
+                cleanArray(this.test);
+                this.test.push(data);
                 this.$nextTick(function () {
                     $( function() {
                         $( ".draggable" ).draggable();
                         $( ".draggable" ).draggable({ containment: "parent" });
-
-
                         var top = (45*counter) + 101, left = (45*counter) + 250;
+                        if(top+350>app.container.height)
+                        {
+                            counter=0;
+                            top = (45*counter) + 101;
+                            left = (45*counter) + 250;
+                        }
                         counter +=1;
-
-
                         $('#orders').children('.draggable').last().css({ top: top, left: left });
-
-
-
                     });
                 })
+                app.$forceUpdate();
 
             },
             remove : function (index) {
-                this.test.splice(index, 1);
-
-
+                counter-=1;
+                this.test[index]=null;
+                app.$forceUpdate();
+            },
+            minimize : function (index)
+            {
+                counter-=1;
+                var backup = this.test[index];
+                this.minimized.push(backup);
+                this.test[index]=null;
+                app.$forceUpdate();
+            },
+            comeback : function (index)
+            {
+                this.addData(this.minimized[index]);
+                this.minimized.splice(index, 1);
+                app.$forceUpdate();
             }
 
         },
@@ -391,6 +410,16 @@
             this.container.width=document.getElementById('orders').clientWidth;
         }
     })
+
+    function cleanArray(actual) {
+        var newArray = new Array();
+        for (var i = 0; i < actual.length; i++) {
+            if (actual[i]) {
+                newArray.push(actual[i]);
+            }
+        }
+        return newArray;
+    }
 </script>
 
 

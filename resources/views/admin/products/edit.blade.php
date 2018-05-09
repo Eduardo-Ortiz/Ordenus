@@ -112,7 +112,7 @@
                                 <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
-                                    Seleccionar… <input v-model="photo" accept="image/png, image/jpeg, image/gif" name="photo" id="photo" type="file">
+                                    Seleccionar… <input ref="photoPath" v-on:change="selectedPhoto()" accept="image/png, image/jpeg, image/gif" name="photo" id="photo" type="file">
                                 </span>
                             </span>
                                     <input accept="image/png, image/jpeg, image/gif" type="text" class="form-control" readonly>
@@ -681,6 +681,10 @@
                             $('#ingredientModal').modal('hide');
                         }
                     }
+                },
+                selectedPhoto : function ()
+                {
+                    this.photo = this.$refs.photoPath.value;
                 },
                 saveProduct : function ()
                 {

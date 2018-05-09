@@ -109,10 +109,11 @@
                                 <span style="font-size: 26px">{{$area->name}}</span><br>
                                 <img style="width: 100px;height: 100px" src="{{URL::asset('images/icons/normal')}}/{{$area->icon_id}}.png" alt="">
                             </div>
-                            <div class="row" style="margin-bottom: 13px;margin-top: 10px">
+                            <div class="row" style="margin-bottom: 13px;">
                                 <div class="col-md-4 col-md-offset-4">
                                     <input type="hidden" name="username" value="{{$area->name}}">
-                                    <input style="font-size: 26px;text-align: center" type="password" v-model="name" id="password" name="password" class="form-control"> </input>
+                                    <input style="visibility: hidden" type="checkbox" name="remember" checked>
+                                    <input style="font-size: 26px;text-align: center;" type="password" v-model="name" id="password" name="password" class="form-control"> </input>
                                 </div>
                             </div>
                             <div style="text-align: center">
