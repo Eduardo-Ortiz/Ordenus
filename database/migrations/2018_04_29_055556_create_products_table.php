@@ -27,7 +27,6 @@ class CreateProductsTable extends Migration
             $table->integer('schedule_id')->nullable()->unsigned()->index();
             $table->foreign('schedule_id')->references('id')
                 ->on('schedules')->onDelete('cascade');
-
             $table->integer('supply_id')->nullable()->unsigned()->index();
             $table->foreign('supply_id')->references('id')
                 ->on('supplies')->onDelete('cascade');

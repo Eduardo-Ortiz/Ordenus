@@ -56,7 +56,7 @@ class SuppliesCategoriesController extends Controller
 
         $request->session()->flash('status', 'Caregoría '. $request->name .' creada correctamente!');
 
-        return redirect('/admin/supplies-categories/create');
+        return redirect('/admin/supplies-categories');
     }
 
     public function edit(SuppliesCategories $supplies_category)

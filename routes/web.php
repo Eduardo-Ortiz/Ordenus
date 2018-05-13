@@ -18,6 +18,8 @@ Route::get('control/orders', 'Control\OrdersController@index');
 
 Route::get('control/orders/panel', 'Control\OrdersController@panel');
 
+Route::get('control/orders/fetch', 'Control\OrdersController@fetch');
+
 
 Route::get('/admin', function () {
     return view('admin/index');
@@ -86,3 +88,10 @@ Route::get('icons/{class}', 'IconsController@getAll');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('menu', 'General\MenuController@index');
+
+Route::get('menu/{menu_category}', 'General\MenuController@category')->name('menu.categories');
+
+

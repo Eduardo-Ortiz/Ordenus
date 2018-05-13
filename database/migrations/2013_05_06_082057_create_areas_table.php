@@ -19,6 +19,7 @@ class CreateAreasTable extends Migration
             $table->string('description');
             $table->boolean('multiple');
             $table->boolean('touch');
+            $table->string('code')->nullable();
             $table->integer('icon_id')->unsigned();
             $table->foreign('icon_id')->references('id')
                 ->on('icons')->onDelete('cascade');

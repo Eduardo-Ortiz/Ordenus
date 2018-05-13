@@ -203,7 +203,7 @@
 
                                 <label for="">Ingredientes: </label>
                                 <div class="row">
-                                    <div  class="col-xs-5 col-sm-5 col-md-5">
+                                    <div  class="col-xs-4 col-sm-4 col-md-4">
                                         <select v-on:change="loadSupply()" v-model="supplyCategory" title="Seleccionar Categoría..." data-size="10" id="parent_id" name="parent_id" data-live-search="true" class="selectpicker form-control">
                                             @foreach($supply_categories as $category)
                                                 <option @if ($category->id == old('parent_id'))
@@ -213,7 +213,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div  class="col-xs-5 col-sm-5 col-md-5">
+                                    <div  class="col-xs-4 col-sm-4 col-md-4">
                                         <div v-show="supplyCategory!=null">
                                             <select title="Sin resultados para esta categoría" v-model="selectedSupply" data-size="10" id="supplys" name="supplys" data-live-search="true" class="selectpicker form-control">
                                                 <option v-bind:value="index" v-bind:data-content="getSupplyList(supply)"
@@ -223,7 +223,7 @@
 
                                     </div>
 
-                                    <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
                                         <button v-on:click="openIngredientModal()" v-show="selectedSupply>=0&&selectedSupply!=null" type="button" class="btn btn-success btn-lg btn-block"><i class="fa fa-floppy-o fa-fw"></i> Agregar Ingrediente</button>
                                     </div>
                                 </div>

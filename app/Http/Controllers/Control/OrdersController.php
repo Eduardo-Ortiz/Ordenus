@@ -26,14 +26,21 @@ class OrdersController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials,true)) {
-            // Authentication passed...
             return redirect()->intended('control/orders/panel');
         }
+        else
+            return "error";
     }
 
     public function panel()
     {
         return view('control/orders/panel');
+    }
+
+    public function fetch()
+    {
+        $user = Auth::user();
+        return $user->area->getOrders;
     }
 
 }

@@ -283,7 +283,7 @@
                         })
                             .then(function (response) {
                                 //handle success
-                                //window.location = '<?php echo URL::asset('/admin/areas') ?>';
+                                window.location = '<?php echo URL::asset('/admin/areas') ?>';
                             })
                             .catch(function (response) {
                                 //handle error

@@ -106,12 +106,12 @@
                         <div>
                             <span style="font-size: 40px">Ingrese el Codigo de Acceso</span><br>
                             <div style="text-align: center">
-                                <span style="font-size: 26px">{{$area->name}}</span><br>
+                                <span style="font-size: 26px">@if(!is_null($area->parent_id)){{$area->getParent->name}}-@endif{{$area->name}}</span><br>
                                 <img style="width: 100px;height: 100px" src="{{URL::asset('images/icons/normal')}}/{{$area->icon_id}}.png" alt="">
                             </div>
                             <div class="row" style="margin-bottom: 13px;">
                                 <div class="col-md-4 col-md-offset-4">
-                                    <input type="hidden" name="username" value="{{$area->name}}">
+                                    <input type="hidden" name="username" value="AR|@if(!is_null($area->parent_id)){{$area->getParent->name}}-@endif{{$area->name}}">
                                     <input style="visibility: hidden" type="checkbox" name="remember" checked>
                                     <input style="font-size: 26px;text-align: center;" type="password" v-model="name" id="password" name="password" class="form-control"> </input>
                                 </div>
@@ -133,7 +133,7 @@
                         <div>
                             @foreach($area->getChilds as $subareas)
                                 <a href="{{URL::asset('control/orders/login')}}/{{$subareas->id}}" style="width: 150px;height: 120px;margin-right: 10px;margin-left: 10px;margin-bottom: 13px" class="btn btn-default btn-lg">
-                                    <span style="font-size: 21px">{{$subareas->name}}</span><br>
+                                    <span style="font-size: 21px">{{$subareas->getParent->name}}-{{$subareas->name}}</span><br>
                                     <img style="width: 70px;height: 70px" src="{{URL::asset('images/icons/normal')}}/{{$subareas->icon_id}}.png" alt="">
                                 </a>
                             @endforeach

@@ -73,7 +73,15 @@
                         <a href="{{url('admin/units')}}">Unidades de Medida</a>
                     </li>
                     <li>
-                        <a href="{{url('admin/units')}}">Areas de Trabajo</a>
+                        <a href="#">Areas de Trabajo<span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse">
+                            <li>
+                                <a href="{{url('admin/areas')}}">Explorar</a>
+                            </li>
+                            <li>
+                                <a href="{{url('admin/areas/create')}}">Crear</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>

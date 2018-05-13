@@ -56,12 +56,16 @@
                     <div style="text-align: center;">
                         <span style="font-size: 40px">Seleccione el Área de Trabajo</span><br>
                         <div>
-                            @foreach($areas as $area)
-                                <a href="{{URL::asset('control/orders/login')}}/{{$area->id}}" style="width: 150px;height: 120px;margin-right: 10px;margin-left: 10px;margin-bottom: 13px" class="btn btn-default btn-lg">
-                                    <span style="font-size: 21px">{{$area->name}}</span><br>
-                                    <img style="width: 70px;height: 70px" src="{{URL::asset('images/icons/normal')}}/{{$area->icon_id}}.png" alt="">
-                                </a>
-                            @endforeach
+                            @if(count($areas))
+                                @foreach($areas as $area)
+                                    <a href="{{URL::asset('control/orders/login')}}/{{$area->id}}" style="width: 150px;height: 120px;margin-right: 10px;margin-left: 10px;margin-bottom: 13px" class="btn btn-default btn-lg">
+                                        <span style="font-size: 21px">{{$area->name}}</span><br>
+                                        <img style="width: 70px;height: 70px" src="{{URL::asset('images/icons/normal')}}/{{$area->icon_id}}.png" alt="">
+                                    </a>
+                                @endforeach
+                            @else
+                               <span style="font-size: 28px;font-weight: 100">No hay areas de trabajo registradas</span>
+                            @endif
                         </div>
 
                     </div>

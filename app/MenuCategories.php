@@ -26,3 +26,4 @@ class MenuCategories extends Model
         return $this->hasMany('App\Product','menu_category_id','id');
     }
 }
+
