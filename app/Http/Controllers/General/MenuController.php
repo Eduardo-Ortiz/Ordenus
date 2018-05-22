@@ -24,4 +24,20 @@ class MenuController extends Controller
 
         return view('general/menu/category',compact('menu_category','categories', 'products'));
     }
+
+    public function mainCategories()
+    {
+        return MenuCategories::whereNull('parent_id')->get();
+    }
+
+    public function categoryChilds(MenuCategories $category)
+    {
+
+        return $category->childCategories;
+    }
+
+    public function categoryProducts(MenuCategories $category)
+    {
+        return $category->products;
+    }
 }

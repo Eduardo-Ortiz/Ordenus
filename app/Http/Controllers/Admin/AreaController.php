@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Area;
+use App\Events\OrderSent;
+use App\Order;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,6 +14,14 @@ class AreaController extends Controller
     //
     public function index()
     {
+
+
+
+
+
+
+
+
         $areas = Area::whereNull('parent_id')->get();
 
         return view('admin/areas/index',compact('areas'));

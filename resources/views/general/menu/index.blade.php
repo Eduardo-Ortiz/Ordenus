@@ -21,7 +21,6 @@
 
     <link rel="stylesheet" href="{{ URL::asset('css/raleway.css') }}" />
 
-    <link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -95,7 +94,6 @@
             display: flex;
             flex-direction: column;
         }
-
     </style>
 
 </head>

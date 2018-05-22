@@ -207,7 +207,6 @@
                 subName : null,
                 subCode : null,
 
-
                 allIcons : [],
                 icons : [],
                 imageLink : null,

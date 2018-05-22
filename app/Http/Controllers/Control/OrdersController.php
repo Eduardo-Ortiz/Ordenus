@@ -27,6 +27,7 @@ class OrdersController extends Controller
 
         if (Auth::attempt($credentials,true)) {
             return redirect()->intended('control/orders/panel');
+
         }
         else
             return "error";

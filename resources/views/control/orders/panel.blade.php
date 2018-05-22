@@ -19,6 +19,8 @@
 
     <link rel="stylesheet" href="{{ URL::asset('css/jquery-ui.min.css') }}" />
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,6 +28,7 @@
     <script type="text/javascript" src="{{URL::asset('js/html5shiv.js')}}"></script>
     <script type="text/javascript" src=" {{URL::asset('js/respond.min.js')}}"></script>
     <![endif]-->
+    <script src="{{URL::asset('js/app.js')}}"> </script>
 
 </head>
 
@@ -238,14 +241,14 @@
 
                 <div id="side-panel">
 
-                    <div class="panel panel-default order-card" @click="addData(id++)">
+                    <div v-for="(order,index) in orders" class="panel panel-default order-card" @click="openOrder(index)">
                         <div  class="panel-body order-card-body">
                             <div class="order-time red-background">
-                                <i style="">Hace<br><span style="font-size: 34px"><strong>5</strong></span><br>Minutos</i>
+                                <i style="">Hace<br><span style="font-size: 34px"><strong>@{{order.time}}</strong></span><br>Minutos</i>
                             </div>
                             <div class="order-data">
                                 <span style="font-size: 21px"><strong>Mesa 1</strong></span><br>
-                                <span>Orden #23</span><br>
+                                <span>Orden #@{{order.id}}</span><br>
                                 <span>Proceso: 10 Min</span><br>
                                 <span>Platillos: 1</span>
                             </div>
@@ -255,7 +258,7 @@
 
 
                 <div id="orders">
-                    <div class="draggable" v-for="(data,index) in test">
+                    <div class="draggable" v-for="(data,index) in work">
                         <div v-if="data!=null" class="panel panel-default">
                             <div @click="remove(index)" class="button close-button" style="position:absolute; top: 0;right: 1px;display:inline-block">
                                 <span class="close-icon"></span>
@@ -268,7 +271,7 @@
                             </div>
 
                             <div  class="panel-body order-card-body">
-                                <div style="text-align: center;font-size: 13px;margin-top: 5px"><b>Orden #@{{data}}</b></div>
+                                <div style="text-align: center;font-size: 13px;margin-top: 5px"><b>Orden #@{{data.id}}</b></div>
                                 <div class="panel panel-default order">
                                     <div  class="panel-body order-card-body">
                                         <div class="order-header red-background">
@@ -310,7 +313,7 @@
                                 <div style="height: 35px;width: 15px;border-radius:2px;border-right:1px solid #dddddd;position:absolute; top: 0;left: 0;display:inline-block" class="red-background">
                                 </div>
 
-                                <strong style="padding-left: 20px;margin-top:8px;font-size: 13px;display: block">Orden @{{data}}</strong>
+                                <strong style="padding-left: 20px;margin-top:8px;font-size: 13px;display: block">Orden @{{data.id}}</strong>
                             </div>
                         </div>
                     </div>
@@ -338,6 +341,8 @@
 <script type="text/javascript" src="{{URL::asset('js/axios.min.js')}}"></script>
 
 
+
+
 <script>
 
 
@@ -347,25 +352,29 @@
     } );
 
 
+    var user = <?php echo Auth::user() ?>
 
     var counter = 0;
 
     var app = new Vue({
         el: '#app',
         data: {
-            test : [],
+            orders : [],
+            work : [],
             minimized : [],
             container : {
                 height : 0,
                 width : 0
             },
-            id : 1
+            id : 1,
+            data : null
         },
         methods: {
 
-            addData : function (data){
-                cleanArray(this.test);
-                this.test.push(data);
+            openOrder : function (index){
+                cleanArray(this.work);
+                this.work.push(this.orders[index]);
+                this.orders.splice(index, 1);
                 this.$nextTick(function () {
                     $( function() {
                         $( ".draggable" ).draggable();
@@ -386,21 +395,37 @@
             },
             remove : function (index) {
                 counter-=1;
-                this.test[index]=null;
+                this.work[index]=null;
                 app.$forceUpdate();
             },
             minimize : function (index)
             {
                 counter-=1;
-                var backup = this.test[index];
+                var backup = this.work[index];
                 this.minimized.push(backup);
-                this.test[index]=null;
+                this.work[index]=null;
                 app.$forceUpdate();
             },
             comeback : function (index)
             {
-                this.addData(this.minimized[index]);
+                cleanArray(this.work);
+                this.work.push(this.minimized[index]);
                 this.minimized.splice(index, 1);
+                this.$nextTick(function () {
+                    $( function() {
+                        $( ".draggable" ).draggable();
+                        $( ".draggable" ).draggable({ containment: "parent" });
+                        var top = (45*counter) + 101, left = (45*counter) + 250;
+                        if(top+350>app.container.height)
+                        {
+                            counter=0;
+                            top = (45*counter) + 101;
+                            left = (45*counter) + 250;
+                        }
+                        counter +=1;
+                        $('#orders').children('.draggable').last().css({ top: top, left: left });
+                    });
+                });
                 app.$forceUpdate();
             }
 
@@ -408,6 +433,14 @@
         mounted: function (){
             this.container.height=document.getElementById('orders').clientHeight;
             this.container.width=document.getElementById('orders').clientWidth;
+        },
+        created: function (){
+            console.log('user-'+user.id);
+            Echo.private('user-'+user.id)
+                .listen('OrderSent', (e) => {
+                    app.orders.push(e.order);
+                    app.orders[app.orders.length-1].time = 0;
+                });
         }
     })
 

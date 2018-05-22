@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Table extends Model
 {
     //
     protected $fillable = [
-        'name', 'area_id'
+        'name', 'enabled'
     ];
 }

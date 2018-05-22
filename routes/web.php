@@ -48,6 +48,14 @@ Route::resource('admin/areas','Admin\AreaController', [
     'as' => 'admin'
 ]);
 
+Route::get('tables/unassigned', 'Admin\TablesController@unassigned');
+
+Route::post('tables/assign', 'Admin\TablesController@assign');
+
+Route::resource('admin/tables','Admin\TablesController', [
+    'as' => 'admin'
+]);
+
 Route::get('admin/units', function () {
     return view('admin/units/index');
 });
@@ -94,4 +102,20 @@ Route::get('menu', 'General\MenuController@index');
 
 Route::get('menu/{menu_category}', 'General\MenuController@category')->name('menu.categories');
 
+Route::get('category/main', 'General\MenuController@mainCategories');
 
+Route::get('category/childs/{category}', 'General\MenuController@categoryChilds');
+
+Route::get('category/products/{category}', 'General\MenuController@categoryProducts');
+
+
+Route::post('orders/send', 'General\OrdersController@send');
+
+
+Route::get('test', function () {
+    return view('control/test');
+});
+
+Route::get('client', function () {
+    return view('client/index');
+});
