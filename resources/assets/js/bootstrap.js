@@ -49,7 +49,7 @@ if (token) {
  window.Pusher = require('pusher-js');
 
  window.Echo = new Echo({
-     authEndpoint : 'http://localhost:8080/ordenus/public/broadcasting/auth',
+     authEndpoint : 'http://localhost:8888/htdocs/ordenus/public/broadcasting/auth',
      broadcaster: 'pusher',
      key: process.env.MIX_PUSHER_APP_KEY,
      cluster: process.env.MIX_PUSHER_APP_CLUSTER,
